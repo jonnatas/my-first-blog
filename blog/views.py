@@ -9,6 +9,7 @@ def post_list(request):
     context = {'posts' : posts}
     return render(request, 'blog/post_list.html', context)
 
+
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     return render(request, 'blog/post_detail.html', {'post': post})
@@ -40,3 +41,13 @@ def post_edit(request, pk):
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
+
+
+def post_remove(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.delete()
+    return redirect('blog:postlist')
+
+
+
+
