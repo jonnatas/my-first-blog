@@ -24,6 +24,7 @@ def post_new(request):
             post = form.save(commit=False)
             post.author = request.user
             post.published_date = timezone.now()
+            post.image = request.image
             post.save()
             return redirect('blog:postdetail', pk=post.pk)
     else:
@@ -40,6 +41,7 @@ def post_edit(request, pk):
             post = form.save(commit=False)
             post.author = request.user
             post.published_date = timezone.now()
+            post.image = request.image
             post.save()
             return redirect('blog:postdetail', pk=post.pk)
     else:
