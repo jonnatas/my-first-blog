@@ -9,7 +9,7 @@
 	<h1><a href="{% url 'blog:postdetail' pk=post.pk %}">{{ post.title }}</a></h1>
 	<p>{{ post.text|linebreaksbr }}</p>
 	<p> Autor: {{post.author}}</p>
-	<a href="{% url 'blog:postdetail' pk=post.pk %}">Comments: {{ post.comments.count }}</a>
+	<a href="{% url 'blog:postdetail' pk=post.pk %}">Comments: {{ post.approved_comments.count }}</a>
 </div>
 {% endfor %}
 {% endblock content %}
