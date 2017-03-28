@@ -23,7 +23,6 @@ def post_new(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            post.published_date = timezone.now()
             post.save()
             return redirect('blog:postdetail', pk=post.pk)
     else:
@@ -39,7 +38,6 @@ def post_edit(request, pk):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            post.published_date = timezone.now()
             post.save()
             return redirect('blog:postdetail', pk=post.pk)
     else:
@@ -53,3 +51,7 @@ def post_remove(request, pk):
     post.delete()
     return redirect('blog:postlist')
 
+@login_required
+def post_draft_list(request):
+    posts = Post.objects.filter(published_date__isnull=True).order_by('created_date')
+    return render(request, 'blog/post_draft_list.html', {'posts': posts})
