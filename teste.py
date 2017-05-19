@@ -1,0 +1,1 @@
+pytest && py.test blog/tests/ --cov

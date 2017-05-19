@@ -4,12 +4,10 @@ from .models import Post, Comment
 from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
 
-
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
     context = {'posts' : posts}
     return render(request, 'blog/post_list.html', context)
-
 
 @login_required
 def post_detail(request, pk):
@@ -44,7 +42,6 @@ def post_edit(request, pk):
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
 
-
 @login_required
 def post_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -54,6 +51,7 @@ def post_remove(request, pk):
 @login_required
 def post_draft_list(request):
     posts = Post.objects.filter(published_date__isnull=True).order_by('created_date')
+    print(posts)
     return render(request, 'blog/post_draft_list.html', {'posts': posts})
 
 @login_required
@@ -76,7 +74,6 @@ def add_comment_to_post(request, pk):
     else:
         form = CommentForm()
     return render(request, 'blog/add_comment_to_post.html', {'form': form})
-
 
 @login_required
 def comment_approve(request, pk):
